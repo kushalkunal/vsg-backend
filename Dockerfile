@@ -22,10 +22,14 @@ USER vsg
 
 COPY --from=build /app/target/vsg-backend-*.jar app.jar
 
+# Default profile — overridden at runtime by SPRING_PROFILES_ACTIVE env var
+ENV SPRING_PROFILES_ACTIVE=prod
+
 EXPOSE 8080
 
 ENTRYPOINT ["java", \
   "-XX:+UseContainerSupport", \
   "-XX:MaxRAMPercentage=75.0", \
   "-Djava.security.egd=file:/dev/./urandom", \
+  "-Dspring.profiles.active=prod", \
   "-jar", "app.jar"]
