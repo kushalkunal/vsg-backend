@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: vsg-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DATABASE_URL
+        sync: false          # set in Render dashboard
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true  # Render auto-generates a secure random value
+      - key: JWT_EXPIRATION_MS
+        value: "86400000"
+      - key: ALLOWED_ORIGINS
+        sync: false          # set to your frontend URL, e.g. https://vsg.onrender.com
+      - key: PORT
+        value: "8080"
