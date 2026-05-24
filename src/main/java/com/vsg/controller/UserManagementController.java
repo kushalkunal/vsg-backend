@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -55,6 +56,15 @@ public class UserManagementController {
     public ResponseEntity<MessageResponse> disableUser(
             @PathVariable UUID id, HttpServletRequest request) {
         return ResponseEntity.ok(userManagementService.toggleActive(extractTenantId(request), id, false));
+    }
+
+    @PatchMapping("/{id}/reset-password")
+    public ResponseEntity<MessageResponse> resetPassword(
+            @PathVariable UUID id,
+            @RequestBody Map<String, String> body,
+            HttpServletRequest request) {
+        return ResponseEntity.ok(userManagementService.adminResetPassword(
+                extractTenantId(request), id, body.get("password")));
     }
 
     private String extractTenantId(HttpServletRequest request) {

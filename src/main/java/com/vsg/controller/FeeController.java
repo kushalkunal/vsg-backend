@@ -39,4 +39,13 @@ public class FeeController {
     ) {
         return ResponseEntity.ok(service.update(tenantId, id, dto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+        @PathVariable String tenantId,
+        @PathVariable String id
+    ) {
+        service.delete(tenantId, id);
+        return ResponseEntity.noContent().build();
+    }
 }

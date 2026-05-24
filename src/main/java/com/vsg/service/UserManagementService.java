@@ -73,9 +73,25 @@ public class UserManagementService {
         AppUser user = userRepository.findById(userId)
                 .filter(u -> u.getTenantId().equals(tenantId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        if (!active && Arrays.asList(user.getRoles()).contains("ADMIN")) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin accounts cannot be disabled.");
+        }
         user.setActive(active);
         userRepository.save(user);
         return new MessageResponse("User " + (active ? "enabled" : "disabled") + ".");
+    }
+
+    @Transactional
+    public MessageResponse adminResetPassword(String tenantId, UUID userId, String newPassword) {
+        if (newPassword == null || newPassword.length() < 8) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password must be at least 8 characters.");
+        }
+        AppUser user = userRepository.findById(userId)
+                .filter(u -> u.getTenantId().equals(tenantId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return new MessageResponse("Password reset successfully.");
     }
 
     private UserDto toDto(AppUser u) {

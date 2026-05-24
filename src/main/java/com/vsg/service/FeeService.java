@@ -39,6 +39,11 @@ public class FeeService {
         return toDto(repo.save(f));
     }
 
+    public void delete(String tenantId, String id) {
+        Fee f = find(tenantId, id);
+        repo.delete(f);
+    }
+
     private Fee find(String tenantId, String id) {
         return repo.findByIdAndTenantId(UUID.fromString(id), tenantId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fee record not found"));
