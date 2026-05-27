@@ -1,5 +1,8 @@
 # ─── Stage 1: Build ───────────────────────────────────────────────────────────
-FROM maven:3.9-eclipse-temurin-21 AS build
+# $BUILDPLATFORM = host native arch (e.g. linux/amd64).
+# Running Maven on the native platform avoids QEMU entirely for the build stage.
+# The JAR produced is platform-independent Java bytecode.
+FROM --platform=$BUILDPLATFORM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
