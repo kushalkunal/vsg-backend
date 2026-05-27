@@ -1,5 +1,5 @@
 # ─── Stage 1: Build ───────────────────────────────────────────────────────────
-FROM maven:3.9-eclipse-temurin-21-alpine AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
@@ -12,12 +12,14 @@ COPY src ./src
 RUN mvn package -DskipTests -q
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
-FROM eclipse-temurin:21-jre-alpine AS runtime
+# Use Debian-slim (jammy) instead of Alpine: native multi-arch support avoids
+# the "exec /bin/sh: input/output error" QEMU failure on arm64 Alpine images.
+FROM eclipse-temurin:21-jre-jammy AS runtime
 
 WORKDIR /app
 
 # Non-root user for security
-RUN addgroup -S vsg && adduser -S vsg -G vsg
+RUN groupadd -r vsg && useradd -r -g vsg -s /sbin/nologin -d /app vsg
 USER vsg
 
 COPY --from=build /app/target/vsg-backend-*.jar app.jar
