@@ -12,10 +12,12 @@ public class FeeDto {
     private String collegeName;
     private String courseName;
     private String branch;
+    private BigDecimal registrationFee;
     private BigDecimal tuitionFee;
+    private BigDecimal examinationFee;
     private BigDecimal hostelFee;
-    private BigDecimal visaFee;
-    private BigDecimal insuranceFee;
+    private BigDecimal totalPkgWithoutHostel;
+    private BigDecimal totalPkgWithHostel;
     private BigDecimal miscellaneousFee;
     private BigDecimal totalFee;
     private String currency;

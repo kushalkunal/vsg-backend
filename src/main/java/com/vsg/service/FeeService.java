@@ -50,16 +50,18 @@ public class FeeService {
     }
 
     private void apply(Fee f, FeeDto dto) {
-        if (dto.getCollegeId()        != null) f.setCollegeId(UUID.fromString(dto.getCollegeId()));
-        if (dto.getCourseId()         != null) f.setCourseId(UUID.fromString(dto.getCourseId()));
-        if (dto.getBranch()           != null) f.setBranch(dto.getBranch());
-        if (dto.getTuitionFee()       != null) f.setTuitionFee(dto.getTuitionFee());
-        if (dto.getHostelFee()        != null) f.setHostelFee(dto.getHostelFee());
-        if (dto.getVisaFee()          != null) f.setVisaFee(dto.getVisaFee());
-        if (dto.getInsuranceFee()     != null) f.setInsuranceFee(dto.getInsuranceFee());
-        if (dto.getMiscellaneousFee() != null) f.setMiscellaneousFee(dto.getMiscellaneousFee());
-        if (dto.getCurrency()         != null) f.setCurrency(dto.getCurrency());
-        // totalFee is auto-computed in @PrePersist/@PreUpdate
+        if (dto.getCollegeId()              != null) f.setCollegeId(UUID.fromString(dto.getCollegeId()));
+        if (dto.getCourseId()               != null) f.setCourseId(UUID.fromString(dto.getCourseId()));
+        if (dto.getBranch()                 != null) f.setBranch(dto.getBranch());
+        if (dto.getRegistrationFee()        != null) f.setRegistrationFee(dto.getRegistrationFee());
+        if (dto.getTuitionFee()             != null) f.setTuitionFee(dto.getTuitionFee());
+        if (dto.getExaminationFee()         != null) f.setExaminationFee(dto.getExaminationFee());
+        if (dto.getHostelFee()              != null) f.setHostelFee(dto.getHostelFee());
+        if (dto.getMiscellaneousFee()       != null) f.setMiscellaneousFee(dto.getMiscellaneousFee());
+        if (dto.getTotalPkgWithoutHostel()  != null) f.setTotalPkgWithoutHostel(dto.getTotalPkgWithoutHostel());
+        if (dto.getTotalPkgWithHostel()     != null) f.setTotalPkgWithHostel(dto.getTotalPkgWithHostel());
+        if (dto.getCurrency()               != null) f.setCurrency(dto.getCurrency());
+        // totalFee is auto-set to totalPkgWithHostel in @PrePersist/@PreUpdate
     }
 
     private FeeDto toDto(Fee f) {
@@ -68,10 +70,12 @@ public class FeeService {
         d.setCollegeId(f.getCollegeId() != null ? f.getCollegeId().toString() : null);
         d.setCourseId(f.getCourseId()   != null ? f.getCourseId().toString()  : null);
         d.setBranch(f.getBranch());
+        d.setRegistrationFee(f.getRegistrationFee());
         d.setTuitionFee(f.getTuitionFee());
+        d.setExaminationFee(f.getExaminationFee());
         d.setHostelFee(f.getHostelFee());
-        d.setVisaFee(f.getVisaFee());
-        d.setInsuranceFee(f.getInsuranceFee());
+        d.setTotalPkgWithoutHostel(f.getTotalPkgWithoutHostel());
+        d.setTotalPkgWithHostel(f.getTotalPkgWithHostel());
         d.setMiscellaneousFee(f.getMiscellaneousFee());
         d.setTotalFee(f.getTotalFee());
         d.setCurrency(f.getCurrency());

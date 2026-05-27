@@ -24,8 +24,8 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "duration_months")
-    private Integer durationMonths;
+    @Column(name = "duration_years")
+    private Integer durationYears;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

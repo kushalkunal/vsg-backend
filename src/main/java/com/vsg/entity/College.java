@@ -41,6 +41,15 @@ public class College {
     @Column(name = "hostel_available")
     private Boolean hostelAvailable = false;
 
+    @Column(name = "ugc_approved")
+    private Boolean ugcApproved = false;
+
+    @Column(name = "aicte_approved")
+    private Boolean aicteApproved = false;
+
+    @Column(name = "naac_accredited")
+    private Boolean naacAccredited = false;
+
     @Column(name = "brochure_url")
     private String brochureUrl;
 

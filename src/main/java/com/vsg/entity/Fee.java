@@ -25,17 +25,23 @@ public class Fee {
     @Column(name = "course_id")
     private UUID courseId;
 
+    @Column(name = "registration_fee", nullable = false, precision = 15, scale = 2)
+    private BigDecimal registrationFee = BigDecimal.ZERO;
+
     @Column(name = "tuition_fee", nullable = false, precision = 15, scale = 2)
     private BigDecimal tuitionFee = BigDecimal.ZERO;
+
+    @Column(name = "examination_fee", nullable = false, precision = 15, scale = 2)
+    private BigDecimal examinationFee = BigDecimal.ZERO;
 
     @Column(name = "hostel_fee", nullable = false, precision = 15, scale = 2)
     private BigDecimal hostelFee = BigDecimal.ZERO;
 
-    @Column(name = "visa_fee", nullable = false, precision = 15, scale = 2)
-    private BigDecimal visaFee = BigDecimal.ZERO;
+    @Column(name = "total_pkg_without_hostel", nullable = false, precision = 15, scale = 2)
+    private BigDecimal totalPkgWithoutHostel = BigDecimal.ZERO;
 
-    @Column(name = "insurance_fee", nullable = false, precision = 15, scale = 2)
-    private BigDecimal insuranceFee = BigDecimal.ZERO;
+    @Column(name = "total_pkg_with_hostel", nullable = false, precision = 15, scale = 2)
+    private BigDecimal totalPkgWithHostel = BigDecimal.ZERO;
 
     @Column(name = "miscellaneous_fee", nullable = false, precision = 15, scale = 2)
     private BigDecimal miscellaneousFee = BigDecimal.ZERO;
@@ -55,6 +61,10 @@ public class Fee {
     @PrePersist
     @PreUpdate
     protected void computeTotal() {
-        this.totalFee = tuitionFee.add(hostelFee).add(visaFee).add(insuranceFee).add(miscellaneousFee);
+        // Package fields are manually set by admin (whole-course prices).
+        // totalFee mirrors totalPkgWithHostel as the grand total.
+        if (this.totalPkgWithHostel != null) {
+            this.totalFee = this.totalPkgWithHostel;
+        }
     }
 }

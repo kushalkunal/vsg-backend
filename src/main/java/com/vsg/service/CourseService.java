@@ -50,7 +50,7 @@ public class CourseService {
     private void apply(Course c, CourseDto dto) {
         if (dto.getName()           != null) c.setName(dto.getName());
         if (dto.getDescription()    != null) c.setDescription(dto.getDescription());
-        if (dto.getDurationMonths() != null) c.setDurationMonths(dto.getDurationMonths());
+        if (dto.getDurationYears()   != null) c.setDurationYears(dto.getDurationYears());
     }
 
     private CourseDto toDto(Course c) {
@@ -58,7 +58,7 @@ public class CourseService {
         d.setId(c.getId().toString());
         d.setName(c.getName());
         d.setDescription(c.getDescription());
-        d.setDurationMonths(c.getDurationMonths());
+        d.setDurationYears(c.getDurationYears());
         return d;
     }
 }

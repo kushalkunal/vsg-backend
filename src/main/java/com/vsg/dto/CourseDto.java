@@ -7,5 +7,5 @@ public class CourseDto {
     private String id;
     private String name;
     private String description;
-    private Integer durationMonths;
+    private Integer durationYears;
 }

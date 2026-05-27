@@ -13,6 +13,9 @@ public class CollegeDto {
     private Boolean nmcApproved;
     private Boolean whoApproved;
     private Boolean hostelAvailable;
+    private Boolean ugcApproved;
+    private Boolean aicteApproved;
+    private Boolean naacAccredited;
     private String brochureUrl;
     private String imageUrl;
     private String state;

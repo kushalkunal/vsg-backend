@@ -84,6 +84,9 @@ public class CollegeService {
         if (dto.getNmcApproved()     != null) c.setNmcApproved(dto.getNmcApproved());
         if (dto.getWhoApproved()     != null) c.setWhoApproved(dto.getWhoApproved());
         if (dto.getHostelAvailable() != null) c.setHostelAvailable(dto.getHostelAvailable());
+        if (dto.getUgcApproved()     != null) c.setUgcApproved(dto.getUgcApproved());
+        if (dto.getAicteApproved()   != null) c.setAicteApproved(dto.getAicteApproved());
+        if (dto.getNaacAccredited()  != null) c.setNaacAccredited(dto.getNaacAccredited());
         if (dto.getBrochureUrl()     != null) c.setBrochureUrl(dto.getBrochureUrl());
         if (dto.getImageUrl()        != null) c.setImageUrl(dto.getImageUrl());
         if (dto.getState()           != null) c.setState(dto.getState());
@@ -101,6 +104,9 @@ public class CollegeService {
         d.setNmcApproved(c.getNmcApproved());
         d.setWhoApproved(c.getWhoApproved());
         d.setHostelAvailable(c.getHostelAvailable());
+        d.setUgcApproved(c.getUgcApproved());
+        d.setAicteApproved(c.getAicteApproved());
+        d.setNaacAccredited(c.getNaacAccredited());
         d.setBrochureUrl(c.getBrochureUrl());
         d.setImageUrl(c.getImageUrl());
         d.setState(c.getState());
@@ -174,6 +180,9 @@ public class CollegeService {
         dto.setNmcApproved(c.getNmcApproved());
         dto.setWhoApproved(c.getWhoApproved());
         dto.setHostelAvailable(c.getHostelAvailable());
+        dto.setUgcApproved(c.getUgcApproved());
+        dto.setAicteApproved(c.getAicteApproved());
+        dto.setNaacAccredited(c.getNaacAccredited());
         dto.setImageUrl(c.getImageUrl());
         dto.setBrochureUrl(c.getBrochureUrl());
         dto.setAffiliation(c.getAffiliation());
@@ -185,10 +194,12 @@ public class CollegeService {
                     Course course = f.getCourseId() != null ? courseMap.get(f.getCourseId()) : null;
                     s.setCourseName(course != null ? course.getName() : null);
                     s.setBranch(f.getBranch());
+                    s.setRegistrationFee(f.getRegistrationFee());
                     s.setTuitionFee(f.getTuitionFee());
+                    s.setExaminationFee(f.getExaminationFee());
                     s.setHostelFee(f.getHostelFee());
-                    s.setVisaFee(f.getVisaFee());
-                    s.setInsuranceFee(f.getInsuranceFee());
+                    s.setTotalPkgWithoutHostel(f.getTotalPkgWithoutHostel());
+                    s.setTotalPkgWithHostel(f.getTotalPkgWithHostel());
                     s.setMiscellaneousFee(f.getMiscellaneousFee());
                     s.setTotalFee(f.getTotalFee());
                     s.setCurrency(f.getCurrency());
