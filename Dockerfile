@@ -12,17 +12,18 @@ COPY src ./src
 RUN mvn package -DskipTests -q
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
-# Use Debian-slim (jammy) instead of Alpine: native multi-arch support avoids
-# the "exec /bin/sh: input/output error" QEMU failure on arm64 Alpine images.
+# eclipse-temurin jammy for proper multi-arch manifest support.
+# NO RUN commands in this stage — QEMU arm64 emulation cannot exec /bin/sh
+# on this host. Use numeric UID 65534 (nobody/nogroup) with COPY --chown
+# to achieve non-root execution without any shell invocation.
 FROM eclipse-temurin:21-jre-jammy AS runtime
 
 WORKDIR /app
 
-# Non-root user for security
-RUN groupadd -r vsg && useradd -r -g vsg -s /sbin/nologin -d /app vsg
-USER vsg
+# Copy jar and assign ownership to nobody (65534) in one layer — no shell needed
+COPY --from=build --chown=65534:65534 /app/target/vsg-backend-*.jar app.jar
 
-COPY --from=build /app/target/vsg-backend-*.jar app.jar
+USER 65534
 
 # Default profile — overridden at runtime by SPRING_PROFILES_ACTIVE env var
 ENV SPRING_PROFILES_ACTIVE=prod
